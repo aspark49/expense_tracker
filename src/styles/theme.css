@@ -1,0 +1,16 @@
+:root {
+  /* 메인 배경색 - 아주 연한 베이지 */
+  --background-primary: #F5F5F1;
+  
+  /* 텍스트 색상 - 진한 회색 */
+  --text-primary: #2C3E50;
+  
+  /* 강조색 - 부드러운 청록색 */
+  --accent-primary: #55967E;
+  
+  /* 보조 배경색 - 연한 그레이 */
+  --background-secondary: #EBEEF2;
+  
+  /* 경고/에러 색상 - 부드러운 레드 */
+  --error: #E57373;
+}

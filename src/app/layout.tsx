@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "@/styles/theme.css";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
