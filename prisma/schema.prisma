@@ -47,6 +47,8 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    ExpenseTrackerTransactions  ExpenseTrackerTransaction[]
+    deletedAt     DateTime?
 }
 
 model VerificationToken {
@@ -55,4 +57,33 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model ExpenseTrackerTransaction {
+    id          String      @id @default(cuid())
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+    deletedAt   DateTime?
+    
+    date        DateTime    // 날짜
+    time        DateTime    // 시간
+    type        TransactionType // 지출/수입
+    
+    mainCategory    String  // 대분류
+    subCategory     String  // 소분류
+    description     String  // 내용
+    
+    amount      Float       // 금액
+    currency    String      // 화폐
+    paymentMethod String    // 결제수단
+    memo        String?     // 메모 (선택사항)
+    
+    // User 관계 설정
+    userId      String
+    user        User        @relation(fields: [userId], references: [id])
+}
+
+enum TransactionType {
+    EXPENSE     // 지출
+    INCOME      // 수입
 }
