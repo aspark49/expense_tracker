@@ -5,7 +5,7 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { Providers } from "./_components/Providers";
-import SideMenu from "./_components/SideMenu";
+import _RootLayout from "./_components/RootLayout";
 
 export const metadata: Metadata = {
   title: "expense tracker",
@@ -21,11 +21,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <TRPCReactProvider>
-            <div className="flex">
-              <div className="flex-1">
-                <SideMenu>{children}</SideMenu>
-              </div>
-            </div>
+            <_RootLayout>{children}</_RootLayout>
           </TRPCReactProvider>
         </Providers>
       </body>
