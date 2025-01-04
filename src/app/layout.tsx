@@ -19,15 +19,15 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <div className="flex">
-          <div className="flex-1">
-            <Providers>
-              <TRPCReactProvider>
+        <Providers>
+          <TRPCReactProvider>
+            <div className="flex">
+              <div className="flex-1">
                 <SideMenu>{children}</SideMenu>
-              </TRPCReactProvider>
-            </Providers>
-          </div>
-        </div>
+              </div>
+            </div>
+          </TRPCReactProvider>
+        </Providers>
       </body>
     </html>
   );

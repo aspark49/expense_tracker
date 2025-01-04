@@ -1,12 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useSession, signOut } from "next-auth/react";
 
 export default function SideMenu({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status !== "loading" && !session) {
+      router.push("/login");
+    }
+  }, [session, status, router]);
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (!session) {
+    return children;
+  }
 
   const menuItems = [
     {
@@ -107,7 +124,7 @@ export default function SideMenu({ children }: { children: React.ReactNode }) {
             )}
           </button>
         </div>
-        <nav>
+        <nav className="flex h-[calc(100%-2rem)] flex-col justify-between">
           <ul className="space-y-2">
             {menuItems.map((item) => (
               <li key={item.path}>
@@ -131,6 +148,37 @@ export default function SideMenu({ children }: { children: React.ReactNode }) {
               </li>
             ))}
           </ul>
+
+          <div className="mb-8">
+            <button
+              onClick={() => signOut({ callbackUrl: "/login" })}
+              className={`flex w-full items-center rounded-lg bg-gray-50 px-4 py-2.5 text-gray-400 transition-all hover:bg-gray-100 ${
+                isCollapsed ? "justify-center" : ""
+              }`}
+            >
+              <span className="inline-block">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
+              <span
+                className={`ml-3 font-medium transition-opacity duration-300 ${
+                  isCollapsed ? "hidden w-0 opacity-0" : "opacity-100"
+                }`}
+              >
+                로그아웃
+              </span>
+            </button>
+          </div>
         </nav>
       </aside>
 
