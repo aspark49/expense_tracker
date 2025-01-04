@@ -1,11 +1,11 @@
 import "@/styles/globals.css";
 import "@/styles/theme.css";
 
-import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { Providers } from "./_components/Providers";
+import SideMenu from "./_components/SideMenu";
 
 export const metadata: Metadata = {
   title: "expense tracker",
@@ -17,11 +17,17 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang="ko">
       <body>
-        <Providers>
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-        </Providers>
+        <div className="flex">
+          <div className="flex-1">
+            <Providers>
+              <TRPCReactProvider>
+                <SideMenu>{children}</SideMenu>
+              </TRPCReactProvider>
+            </Providers>
+          </div>
+        </div>
       </body>
     </html>
   );
